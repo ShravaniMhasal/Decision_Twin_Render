@@ -163,7 +163,7 @@
                 </div>
 
                 <button class="button button-primary" id="analyzeButton">✨ Analyze Resume</button>
-                <p class="small-text">Your resume is processed securely with Decision Twin AI.</p>
+                <p class="small-text">Your resume is processed client-side with Decision Twin Engine.</p>
             </div>
         </section>
 
@@ -242,13 +242,11 @@
             </section>
         </div>
 
-        <footer>Decision Twin • Resume and Career Intelligence Module</footer>
+        <footer>Decision Twin • Client-Side Resume and Career Module</footer>
     </main>
 
     <script>
         pdfjsLib.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
-
-        const API_BASE_URL = 'http://127.0.0.1:5000/api';
 
         const careerProfiles = {
             dataScientist: {
@@ -403,26 +401,20 @@
             return skill.split(" ").map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(" ");
         }
 
-        async function saveResumeAnalysisToBackend(analysis) {
-            const token = localStorage.getItem('token');
-            if (!token) return;
+        function saveResumeAnalysisLocally(analysis) {
+            const existingReports = JSON.parse(localStorage.getItem('saved_reports') || '[]');
+            const missingList = analysis.missingSkills.map(s => formatSkill(s.skill)).join(', ');
 
-            try {
-                const missingList = analysis.missingSkills.map(s => formatSkill(s.skill)).join(', ');
-                await fetch(`${API_BASE_URL}/decisions`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({
-                        title: `Resume Analysis — ${analysis.profile.name}`,
-                        description: `Match Score: ${analysis.score}%. Missing: ${missingList || 'None'}`
-                    })
-                });
-            } catch (err) {
-                console.warn("Could not save evaluation to backend server:", err);
-            }
+            const newReport = {
+                id: Date.now(),
+                title: `Resume Analysis — ${analysis.profile.name}`,
+                description: `Match Score: ${analysis.score}%. Missing: ${missingList || 'None'}`,
+                created_at: new Date().toISOString()
+            };
+
+            existingReports.push(newReport);
+            localStorage.setItem('saved_reports', JSON.stringify(existingReports));
+            showToast("Report saved locally.");
         }
 
         function renderAnalysis(analysis) {
@@ -476,7 +468,7 @@
                 document.querySelectorAll(".progress-fill").forEach(pf => pf.style.width = pf.dataset.width);
             });
 
-            saveResumeAnalysisToBackend(analysis);
+            saveResumeAnalysisLocally(analysis);
         }
 
         analyzeButton.addEventListener("click", async () => {

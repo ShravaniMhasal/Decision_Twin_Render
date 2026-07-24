@@ -168,8 +168,6 @@
     </main>
 
     <script>
-        const API_BASE_URL = 'http://127.0.0.1:5000/api';
-
         const roadmapData = {
             dataScientist: {
                 name: "Data Scientist",
@@ -264,28 +262,8 @@
             return completedPhases[selectedCareerKey] || [];
         }
 
-        // BACKEND INTEGRATED SAVE FUNCTION
-        async function saveProgress() {
+        function saveProgress() {
             localStorage.setItem(progressStorageKey, JSON.stringify(completedPhases));
-
-            const token = localStorage.getItem('token');
-            if (!token) return;
-
-            try {
-                await fetch(`${API_BASE_URL}/decisions/roadmap-progress`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({
-                        career: selectedCareerKey,
-                        completed_phases: getCareerCompletedPhases()
-                    })
-                });
-            } catch (err) {
-                console.warn("Server sync error:", err);
-            }
         }
 
         function updateProgress() {

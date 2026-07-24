@@ -73,7 +73,7 @@
         <div class="eyebrow">TOOL</div>
         <div class="page-title" style="margin-bottom:0;">Quick Compare</div>
       </div>
-      <button class="btn-save" onclick="saveComparisonToBackend()">Save Comparison</button>
+      <button class="btn-save" onclick="saveComparisonLocally()">Save Comparison</button>
     </div>
 
     <div class="compare-selectors" style="margin-top: 20px;">
@@ -140,9 +140,6 @@
 </div>
 
 <script>
-const API_BASE_URL = 'http://127.0.0.1:5000/api';
-
-// Update titles when user changes selections
 document.getElementById('careerSelect1').addEventListener('change', (e) => {
   document.getElementById('cardTitle1').textContent = e.target.value;
 });
@@ -150,64 +147,24 @@ document.getElementById('careerSelect2').addEventListener('change', (e) => {
   document.getElementById('cardTitle2').textContent = e.target.value;
 });
 
-// Save to Flask API
-async function saveComparisonToBackend() {
-  const token = localStorage.getItem('token');
-  if (!token) {
-    alert('Please log in first.');
-    window.location.href = '../index.html';
-    return;
-  }
-
+function saveComparisonLocally() {
   const role1 = document.getElementById('careerSelect1').value;
   const role2 = document.getElementById('careerSelect2').value;
   const title = `${role1} vs. ${role2}`;
 
-  try {
-    // 1. Create Decision Record
-    const decRes = await fetch(`${API_BASE_URL}/decisions`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        title: title,
-        description: `Comparison report between ${role1} and ${role2}.`
-      })
-    });
+  const savedReports = JSON.parse(localStorage.getItem('saved_reports') || '[]');
+  const newReport = {
+    id: Date.now(),
+    title: title,
+    description: `Comparison report evaluation between ${role1} and ${role2}.`,
+    created_at: new Date().toISOString()
+  };
 
-    const decData = await decRes.json();
-    if (!decRes.ok) throw new Error(decData.error || 'Failed to create comparison.');
+  savedReports.push(newReport);
+  localStorage.setItem('saved_reports', JSON.stringify(savedReports));
 
-    // 2. Setup Options & Criteria Matrix
-    const setupRes = await fetch(`${API_BASE_URL}/decisions/${decData.id}/setup`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({
-        options: [role1, role2],
-        criteria: [
-          { name: "Avg Salary", weight: 8.0 },
-          { name: "Growth Rate", weight: 7.0 },
-          { name: "Skill Match", weight: 9.0 }
-        ]
-      })
-    });
-
-    if (setupRes.ok) {
-      alert('Comparison report saved successfully!');
-      window.location.href = 'saved-reports.html';
-    } else {
-      const errData = await setupRes.json();
-      alert(errData.error || 'Failed to set up comparison matrix.');
-    }
-  } catch (err) {
-    console.error('Error saving comparison:', err);
-    alert('Failed to connect to server.');
-  }
+  alert('Comparison report saved successfully!');
+  window.location.href = 'saved-reports.html';
 }
 </script>
 

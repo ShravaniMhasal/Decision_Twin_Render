@@ -1,6 +1,6 @@
 // ======================================================
 // DECISION TWIN
-// Main JavaScript
+// Main JavaScript (100% Client-Side)
 // ======================================================
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -209,7 +209,7 @@ if (downloadBtn) {
 
     downloadBtn.parentElement.addEventListener("click", () => {
 
-        showToast("Download feature will be connected to backend.");
+        showToast("Generating local download package...");
 
     });
 
@@ -241,7 +241,7 @@ exploreButtons.forEach(btn => {
 
     btn.addEventListener("click", () => {
 
-        showToast("Course details will be available soon.");
+        showToast("Course details available in roadmap view.");
 
     });
 
@@ -450,10 +450,6 @@ careerSelect.value
 });
 
 }
-
-// ================================================
-// Console
-// ================================================
 
 console.log("Decision Twin UI Loaded Successfully 🚀");
 

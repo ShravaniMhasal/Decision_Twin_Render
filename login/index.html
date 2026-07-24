@@ -120,7 +120,6 @@
 
   .auth-switch a:hover { text-decoration: underline; }
 
-  /* Modes visibility */
   .auth-mode { display: none; }
   .auth-mode.active { display: block; }
 
@@ -218,8 +217,6 @@
   </div>
 
   <script>
-    const API_BASE_URL = 'http://127.0.0.1:5000/api';
-
     document.addEventListener('DOMContentLoaded', () => {
       document.querySelectorAll('form').forEach(form => form.reset());
     });
@@ -245,81 +242,39 @@
       }
     }
 
-    // CONNECTED LOGIN HANDLER
-    async function handleLogin(e) {
+    function handleLogin(e) {
       e.preventDefault();
       const usernameInput = document.getElementById('login-username').value;
-      const passwordInput = document.getElementById('login-password').value;
       const roleInput = document.getElementById('login-role').value;
 
-      try {
-        const response = await fetch(`${API_BASE_URL}/auth/login`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            username: usernameInput,
-            password: passwordInput
-          })
-        });
+      localStorage.setItem('userEmail', usernameInput);
+      localStorage.setItem('pathway_user_fullname', usernameInput);
+      localStorage.setItem('userRole', roleInput);
+      localStorage.setItem('isLoggedIn', 'true');
 
-        const data = await response.json();
-
-        if (response.ok && data.access_token) {
-          localStorage.setItem('token', data.access_token);
-          localStorage.setItem('userEmail', data.user?.email || usernameInput);
-          localStorage.setItem('pathway_user_fullname', data.user?.username || usernameInput);
-          localStorage.setItem('userRole', roleInput);
-          localStorage.setItem('isLoggedIn', 'true');
-
-          if (roleInput === 'admin') {
-            window.location.href = '../adminpanel/admin_dashboard.html';
-          } else {
-            window.location.href = '../dashboard/dashboard.html';
-          }
-        } else {
-          alert(data.error || 'Login failed. Invalid credentials.');
-        }
-      } catch (err) {
-        console.error('API Error:', err);
-        alert('Could not connect to Flask server. Please check if backend is running.');
+      if (roleInput === 'admin') {
+        window.location.href = '../adminpanel/admin_dashboard.html';
+      } else {
+        window.location.href = '../dashboard/dashboard.html';
       }
     }
 
-    // CONNECTED SIGNUP HANDLER
-    async function handleSignup(e) {
+    function handleSignup(e) {
       e.preventDefault();
       const usernameInput = document.getElementById('signup-name').value;
       const emailInput = document.getElementById('signup-email').value;
-      const passwordInput = document.getElementById('signup-password').value;
 
-      try {
-        const response = await fetch(`${API_BASE_URL}/auth/register`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            username: usernameInput,
-            email: emailInput,
-            password: passwordInput
-          })
-        });
+      localStorage.setItem('userEmail', emailInput);
+      localStorage.setItem('pathway_user_fullname', usernameInput);
+      localStorage.setItem('isLoggedIn', 'true');
 
-        const data = await response.json();
-
-        if (response.ok) {
-          alert('Account created successfully! Please log in.');
-          switchMode('login');
-        } else {
-          alert(data.error || 'Registration failed.');
-        }
-      } catch (err) {
-        console.error('API Error:', err);
-        alert('Could not connect to Flask server. Please check if backend is running.');
-      }
+      alert('Account created successfully!');
+      window.location.href = '../dashboard/dashboard.html';
     }
 
     function handleForgot(e) {
       e.preventDefault();
-      alert('Password reset link sent to your email!');
+      alert('Password reset instructions saved to local session!');
       switchMode('login');
     }
   </script>

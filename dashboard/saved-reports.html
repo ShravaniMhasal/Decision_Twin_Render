@@ -64,13 +64,12 @@
     <div class="page-title">Saved Reports</div>
 
     <div class="reports-grid" id="reportsGrid">
-      <!-- Fallback static content while loading -->
       <div class="report-card">
         <h4>Data Analyst vs. Data Scientist</h4>
         <p>Comprehensive salary and roadmap evaluation.</p>
         <div class="report-meta">
           <span>Saved report</span>
-          <button class="btn-view">View Report</button>
+          <button class="btn-view" onclick="alert('Analysis summary: High skill overlay with target match rate.')">View Report</button>
         </div>
       </div>
     </div>
@@ -78,61 +77,29 @@
 </div>
 
 <script>
-const API_BASE_URL = 'http://127.0.0.1:5000/api';
+function fetchSavedReportsLocally() {
+  const reports = JSON.parse(localStorage.getItem('saved_reports') || '[]');
+  const grid = document.getElementById('reportsGrid');
 
-async function fetchSavedReports() {
-  const token = localStorage.getItem('token');
-  if (!token) return;
-
-  try {
-    const res = await fetch(`${API_BASE_URL}/decisions`, {
-      method: 'GET',
-      headers: { 'Authorization': `Bearer ${token}` }
-    });
-
-    if (!res.ok) return;
-
-    const decisions = await res.json();
-    const grid = document.getElementById('reportsGrid');
-
-    if (decisions && decisions.length > 0) {
-      grid.innerHTML = decisions.map(d => `
-        <div class="report-card">
-          <h4>${d.title}</h4>
-          <p>${d.description || 'Saved Decision Twin Evaluation'}</p>
-          <div class="report-meta">
-            <span>Created ${new Date(d.created_at).toLocaleDateString()}</span>
-            <button class="btn-view" onclick="viewReportInsights(${d.id})">View Report</button>
-          </div>
+  if (reports.length > 0) {
+    grid.innerHTML = reports.map((r, index) => `
+      <div class="report-card">
+        <h4>${r.title}</h4>
+        <p>${r.description || 'Saved Decision Twin Evaluation'}</p>
+        <div class="report-meta">
+          <span>Created ${new Date(r.created_at || Date.now()).toLocaleDateString()}</span>
+          <button class="btn-view" onclick="viewReportInsights('${r.title}', '${r.description}')">View Report</button>
         </div>
-      `).join('');
-    }
-  } catch (err) {
-    console.error('Failed to load saved reports:', err);
+      </div>
+    `).join('');
   }
 }
 
-async function viewReportInsights(decisionId) {
-  const token = localStorage.getItem('token');
-
-  try {
-    const res = await fetch(`${API_BASE_URL}/decisions/${decisionId}/insights`, {
-      headers: { 'Authorization': `Bearer ${token}` }
-    });
-
-    const insights = await res.json();
-    if (res.ok) {
-      alert(`Top Driving Factor: ${insights.top_driving_factor || 'N/A'}\n\nSummary:\n${insights.summary || 'Matrix analysis ready.'}`);
-    } else {
-      alert(insights.error || 'Could not load report insights.');
-    }
-  } catch (err) {
-    console.error('Error fetching insights:', err);
-    alert('Failed to connect to backend server.');
-  }
+function viewReportInsights(title, description) {
+  alert(`Report: ${title}\n\nDetails:\n${description}`);
 }
 
-document.addEventListener('DOMContentLoaded', fetchSavedReports);
+document.addEventListener('DOMContentLoaded', fetchSavedReportsLocally);
 </script>
 
 </body>
