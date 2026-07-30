@@ -45,6 +45,16 @@ def login():
 
         user = User.query.filter_by(email=email).first()
 
+        # DEBUG
+        print("========== LOGIN DEBUG ==========")
+        print("Entered Email:", email)
+        print("User Found:", user)
+
+        if user:
+            print("Database Email:", user.email)
+            print("Password Match:", check_password_hash(user.password, password))
+            print("Role:", user.role)
+
         if user and check_password_hash(user.password, password):
 
             print("Email:", user.email)
