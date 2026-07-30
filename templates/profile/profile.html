@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twin Decision System | System Registration Portal</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='profile/pfstyle.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="light-theme">
+
+    <div class="profile-container">
+        <!-- Left Sidebar: Dynamically Populated via Forms -->
+        <aside class="profile-sidebar">
+            <div class="avatar-container">
+                <!-- Generic Profile Placeholder Icon Asset Wrapper -->
+                <div class="avatar-placeholder" id="avatar-fallback">
+                    <i class="fa-solid fa-user-gear"></i>
+                </div>
+                <img src="" alt="Profile Picture" class="avatar" id="profile-pic" style="display: none;">
+                
+                <label for="avatar-input" class="upload-btn" title="Upload Photo">
+                    <i class="fa-solid fa-camera"></i>
+                </label>
+                <input type="file" id="avatar-input" accept="image/*" style="display: none;">
+            </div>
+            
+            <h2 class="user-name" id="display-name">New System User</h2>
+            <p class="user-role" id="display-role">Awaiting Assignment...</p>
+            <span class="status-badge standby" id="display-status">Offline</span>
+
+            <!-- NAVIGATION SIDEBAR -->
+            <nav class="sidebar-nav">
+                <button class="nav-item active" onclick="switchTab('profile')"><i class="fa-solid fa-user"></i> Profile Setup</button>
+                <button class="nav-item" onclick="switchTab('decisions')"><i class="fa-solid fa-code-compare"></i> Saved Decisions</button>
+                <button class="nav-item" onclick="switchTab('reports')"><i class="fa-solid fa-file-lines"></i> Reports</button>
+                <button class="nav-item" onclick="switchTab('notifications')"><i class="fa-solid fa-bell"></i> Notifications <span class="nav-badge" id="notif-badge-count" style="display:none;">0</span></button>
+                <button class="nav-item" onclick="switchTab('settings')"><i class="fa-solid fa-gear"></i> Settings</button>
+            </nav>
+        </aside>
+
+        <!-- Right Main Workspace Content Panel -->
+        <main class="profile-main">
+            
+            <!-- PAGE 1: CORE PROFILE SETUP & DIAGNOSTICS -->
+            <div id="page-profile" class="tab-content active">
+                <header class="main-header" style="margin-bottom: 40px; padding-bottom: 24px;">
+                    <div>
+                        <h1>Profile Architecture Setup</h1>
+                        <p class="subtitle">Initialize workspace nodes, coordinate access tiers, and manage core profile synchronization settings.</p>
+                    </div>
+                    <button type="button" class="btn btn-primary" onclick="saveProfileChanges()"><i class="fa-solid fa-floppy-disk"></i> Save Changes</button>
+                </header>
+
+                <div class="profile-workspace-wrapper">
+                    
+                    <!-- BLOCK 1: IDENTITY VARIABLES -->
+                    <div class="profile-card-group">
+                        <h3 class="profile-block-heading"><i class="fa-solid fa-id-badge"></i> Core Identity Variables</h3>
+                        <div class="profile-inner-card">
+                            <form id="profile-form" class="profile-form" onsubmit="event.preventDefault();">
+                                <div class="form-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
+                                    <div class="form-group">
+                                        <label for="first-name">First Name</label>
+                                        <input type="text" id="first-name" placeholder="Enter first name..." required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="last-name">Last Name</label>
+                                        <input type="text" id="last-name" placeholder="Enter last name..." required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="role-input">System Assignment Role</label>
+                                        <input type="text" id="role-input" placeholder="e.g. Lead Simulation Engineer...">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">System Email Address</label>
+                                        <input type="email" id="email" placeholder="user@domain.io..." required>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- BLOCK 2: CLEARANCE & SECURITY PARAMETERS (NEW EXTENDED OPTIONS) -->
+                    <div class="profile-card-group">
+                        <h3 class="profile-block-heading"><i class="fa-solid fa-shield-halved"></i> Terminal Node Security</h3>
+                        <div class="profile-inner-card">
+                            <div class="form-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
+                                <div class="form-group">
+                                    <label>Security Clearance Level</label>
+                                    <input type="text" value="Level 4 - Workspace Administrator" readonly class="readonly-input">
+                                </div>
+                                <div class="form-group">
+                                    <label>Cryptographic Signature Status</label>
+                                    <input type="text" value="RSA-4096 / Active Key Verified" readonly class="readonly-input security-verified">
+                                </div>
+                                <div class="form-group">
+                                    <label>Assigned Regional Datacenter</label>
+                                    <select id="datacenter-zone" class="profile-select-input">
+                                        <option value="in-west" selected>Asia West (Mumbai Hub)</option>
+                                        <option value="us-east">US East (N. Virginia)</option>
+                                        <option value="eu-central">EU Central (Frankfurt)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label>Telemetry Multi-Factor Channel</label>
+                                    <select id="mfa-channel" class="profile-select-input">
+                                        <option value="biometric" selected>Hardware Token Passkey</option>
+                                        <option value="totp">Authenticator App (TOTP)</option>
+                                        <option value="disabled">Disabled (Not Recommended)</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BLOCK 3: HARDWARE DIAGNOSTIC TELEMETRY (NEW COMPONENT METRICS) -->
+                    <div class="profile-card-group">
+                        <h3 class="profile-block-heading"><i class="fa-solid fa-chart-line"></i> Terminal Simulation Performance</h3>
+                        <div class="profile-inner-card analytics-grid">
+                            <div class="diagnostic-pill">
+                                <span class="pill-label">Node Integrity</span>
+                                <strong class="pill-value text-success">99.98%</strong>
+                            </div>
+                            <div class="diagnostic-pill">
+                                <span class="pill-label">Active Sync Clock</span>
+                                <strong class="pill-value">0.14 ms</strong>
+                            </div>
+                            <div class="diagnostic-pill">
+                                <span class="pill-label">Bandwidth Allocation</span>
+                                <strong class="pill-value">10 Gbps</strong>
+                            </div>
+                            <div class="diagnostic-pill">
+                                <span class="pill-label">Cached Parameters</span>
+                                <strong class="pill-value">4,120 Blocks</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- PAGE 2: SAVED DECISIONS (Starts Blank with Dynamic Adder) -->
+            <div id="page-decisions" class="tab-content">
+                <header class="main-header">
+                    <div>
+                        <h1>Saved Analytics Comparisons</h1>
+                        <p class="subtitle">Review stored architectural model variances.</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="addNewComparison()"><i class="fa-solid fa-plus"></i> Capture Current Matrix</button>
+                </header>
+
+                <div class="cards-grid" id="comparisons-container">
+                    <!-- Blank state indicator -->
+                    <div class="empty-state-notice" id="decisions-empty">
+                        <i class="fa-solid fa-folder-open"></i>
+                        <p>No decision arrays stored yet. Complete profile parameters to save instances.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PAGE 3: REPORTS -->
+            <div id="page-reports" class="tab-content">
+                <header class="main-header">
+                    <div>
+                        <h1>System Performance Reports</h1>
+                        <p class="subtitle">Download architectural performance matrix logs.</p>
+                    </div>
+                </header>
+
+                <div class="table-container">
+                    <table class="portal-table">
+                        <thead>
+                            <tr>
+                                <th>Report Filename</th>
+                                <th>Generation Status</th>
+                                <th>Size</th>
+                                <th style="text-align: right;">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><i class="fa-solid fa-file-pdf text-danger"></i> <strong>Simulation_Matrix_Template.pdf</strong></td>
+                                <td><span class="status-indicator-dot online"> Ready</span></td>
+                                <td>1.1 MB</td>
+                                <td style="text-align: right;"><button class="btn btn-sm btn-secondary" onclick="triggerDownload('Simulation_Matrix_Template.pdf')"><i class="fa-solid fa-download"></i> Download</button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- PAGE 4: NOTIFICATIONS -->
+            <div id="page-notifications" class="tab-content">
+                <header class="main-header">
+                    <div>
+                        <h1>Alert Log Feeds</h1>
+                        <p class="subtitle">Real-time system updates generated from running simulation twin branches.</p>
+                    </div>
+                    <button class="btn btn-secondary" id="clear-notif-btn" onclick="clearAllNotifications()" style="display: none;">Mark All As Read</button>
+                </header>
+
+                <div class="notif-stack" id="notifications-container">
+                    <div class="empty-state-notice" id="notif-empty">
+                        <i class="fa-solid fa-bell-slash"></i>
+                        <p>Notification feeds will activate once your core profile metrics stream goes live.</p>
+                    </div>
+                </div>
+            </div>
+
+<!-- PAGE 5: SYSTEM WORKSPACE SETTINGS -->
+<div id="page-settings" class="tab-content">
+    <header class="main-header" style="margin-bottom: 40px; padding-bottom: 24px;">
+        <div>
+            <h1>System Settings</h1>
+            <p class="subtitle">Fine-tune simulation parameters, workspace aesthetics, and automated alerts.</p>
+        </div>
+        <button class="btn btn-primary" onclick="alert('Configuration matrix deployed successfully.')"><i class="fa-solid fa-square-check"></i> Apply Configurations</button>
+    </header>
+
+    <div class="settings-workspace-wrapper">
+        
+        <!-- SECTION 1: VISUAL DISPLAYS -->
+        <div class="settings-card-group">
+            <h3 class="settings-block-heading"><i class="fa-solid fa-palette"></i> Interface Presentation</h3>
+            <div class="settings-inner-card">
+                <div class="setting-row">
+                    <div class="setting-detail-text">
+                        <strong>Workspace Theme Style</strong>
+                        <p>Switch between bright, highly readable text variants or standard dark workspace environments.</p>
+                    </div>
+                    <div class="theme-toggle-group">
+                        <button class="theme-btn active" id="theme-light-btn" onclick="setTheme('light')"><i class="fa-solid fa-sun"></i> Light</button>
+                        <button class="theme-btn" id="theme-dark-btn" onclick="setTheme('dark')"><i class="fa-solid fa-moon"></i> Tech Dark</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 2: ENGINE COMPUTING NUMBERS -->
+        <div class="settings-card-group">
+            <h3 class="settings-block-heading"><i class="fa-solid fa-microchip"></i> Twin Simulation Fidelity</h3>
+            <div class="settings-inner-card">
+                <div class="form-grid" style="gap: 30px;">
+                    <div class="form-group">
+                        <label for="sync-rate">Real-Time Twin Sync Frequency</label>
+                        <select id="sync-rate" class="settings-select-input">
+                            <option value="realtime">Continuous Stream (Ultra Low Latency)</option>
+                            <option value="5s" selected>Every 5 Seconds (Recommended)</option>
+                            <option value="30s">Every 30 Seconds (Eco Compute)</option>
+                            <option value="manual">Manual Pull Only</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="matrix-depth">Prediction Matrix Depth</label>
+                        <select id="matrix-depth" class="settings-select-input">
+                            <option value="standard">Standard Linear Matrices</option>
+                            <option value="deep" selected>Deep Branching Trees (High Precision)</option>
+                            <option value="quantum">Experimental Neural Simulation Matrix</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SECTION 3: AUTOMATED ALERTS (WITH SLIDING TOGGLES) -->
+        <div class="settings-card-group">
+            <h3 class="settings-block-heading"><i class="fa-solid fa-bell"></i> Notification Preferences</h3>
+            <div class="settings-inner-card toggle-stack">
+                
+                <div class="setting-row toggle-row">
+                    <div class="setting-detail-text">
+                        <strong>Critical Engine Failure Alerts</strong>
+                        <p>Receive immediate modal window overlays if a running predictive twin crashes or returns unstable margins.</p>
+                    </div>
+                    <label class="switch-toggle">
+                        <input type="checkbox" id="toggle-crit" checked>
+                        <span class="switch-slider"></span>
+                    </label>
+                </div>
+
+                <div class="setting-row toggle-row">
+                    <div class="setting-detail-text">
+                        <strong>Minor Optimization Metrics Log</strong>
+                        <p>Record standard telemetry logs into your background notification tray feeds for active historical reviews.</p>
+                    </div>
+                    <label class="switch-toggle">
+                        <input type="checkbox" id="toggle-logs">
+                        <span class="switch-slider"></span>
+                    </label>
+                </div>
+
+                <div class="setting-row toggle-row">
+                    <div class="setting-detail-text">
+                        <strong>Data Export Processing Sounds</strong>
+                        <p>Play an instant diagnostic audio signal tone when report logs compile into localized hardware downloads.</p>
+                    </div>
+                    <label class="switch-toggle">
+                        <input type="checkbox" id="toggle-audio" checked>
+                        <span class="switch-slider"></span>
+                    </label>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- SECTION 4: DESTRUCTION CACHE CORE -->
+        <div class="settings-card-group" style="margin-top: 20px;">
+            <h3 class="settings-block-heading text-danger"><i class="fa-solid fa-triangle-exclamation"></i> Danger Action Zone</h3>
+            <div class="settings-inner-card danger-box">
+                <div class="setting-row">
+                    <div class="setting-detail-text">
+                        <strong class="text-danger">Wipe Application Memory Caches</strong>
+                        <p>Irreversibly restore current configurations, logs, and account identity structures back to factory default states.</p>
+                    </div>
+                    <button class="btn btn-danger" onclick="resetFullDashboardState()"><i class="fa-solid fa-trash-can"></i> Reset Caches</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='profile/pfscript.js') }}"></script>
+</body>
+</html>

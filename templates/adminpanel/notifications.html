@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Notifications</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet"
+      href="{{ url_for('static', filename='adminpanel/admin_dashboard.css') }}">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- ===========================
+            SIDEBAR
+    ============================ -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <h2>Decision Twin</h2>
+
+            <p>Admin Panel</p>
+
+        </div>
+
+        <ul>
+
+            <li>
+                <a href="{{ url_for('admin_dashboard') }}">
+                    <i class="fas fa-house"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('manage_users') }}">
+                    <i class="fas fa-users"></i>
+                    <span>Manage Users</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('career_management') }}">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>Career Management</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('latest_recommendation') }}">
+                    <i class="fas fa-brain"></i>
+                    <span>Latest Recommendation</span>
+                </a>
+            </li>
+
+            <li class="active">
+                <a href="{{ url_for('notifications') }}">
+                    <i class="fas fa-bell"></i>
+                    <span>Notifications</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('settings') }}">
+                    <i class="fas fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('logout') }}">
+                    <i class="fas fa-right-from-bracket"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+
+        </ul>
+
+    </aside>
+
+    <!-- ===========================
+            MAIN CONTENT
+    ============================ -->
+
+    <main class="main-content">        <!-- ===========================
+                TOP NAVBAR
+        ============================ -->
+
+        <header class="topbar">
+
+            <div class="dashboard-title">
+
+                <img src="{{ url_for('static', filename='adminpanel/images/logochat.png') }}"
+                    alt="Decision Twin Logo">
+
+                <div>
+                    <h1>Notifications</h1>
+                </div>
+
+            </div>
+
+        </header>
+
+        <!-- ===========================
+                PAGE HEADER
+        ============================ -->
+
+        <section class="users-header">
+
+            <div class="page-heading">
+
+                <div class="title-row">
+
+                    <a href="admin_dashboard.html" class="back-btn">
+                        <i class="fas fa-arrow-left"></i>
+                    </a>
+
+                    <h2>Notifications</h2>
+
+                </div>
+
+                <p>
+                    View and manage all platform notifications and alerts.
+                </p>
+
+            </div>
+
+        </section>
+
+        <!-- ===========================
+                SEARCH BAR
+        ============================ -->
+
+        <section class="user-toolbar">
+
+            <div class="toolbar-search">
+
+                <i class="fas fa-search"></i>
+
+                <input
+                    type="text"
+                    placeholder="Search notifications...">
+
+            </div>
+
+            <div class="toolbar-buttons">
+
+                <button class="invite-btn">
+                    <i class="fas fa-check-double"></i>
+                    Mark All Read
+                </button>
+
+                <button class="refresh-btn">
+                    <i class="fas fa-rotate-right"></i>
+                    Refresh
+                </button>
+
+            </div>
+
+        </section>
+
+        <!-- ===========================
+                SUMMARY CARDS
+        ============================ -->
+
+        <section class="user-summary">
+
+            <div class="summary-card">
+
+                <div class="summary-icon blue">
+                    <i class="fas fa-bell"></i>
+                </div>
+
+                <div class="summary-info">
+                    <h3>1248</h3>
+                    <p>Total Notifications</p>
+                </div>
+
+            </div>
+
+            <div class="summary-card">
+
+                <div class="summary-icon green">
+                    <i class="fas fa-envelope-open"></i>
+                </div>
+
+                <div class="summary-info">
+                    <h3>96</h3>
+                    <p>Read Today</p>
+                </div>
+
+            </div>
+
+            <div class="summary-card">
+
+                <div class="summary-icon red">
+                    <i class="fas fa-exclamation-circle"></i>
+                </div>
+
+                <div class="summary-info">
+                    <h3>14</h3>
+                    <p>System Alerts</p>
+                </div>
+
+            </div>
+
+            <div class="summary-card">
+
+                <div class="summary-icon orange">
+                    <i class="fas fa-envelope"></i>
+                </div>
+
+                <div class="summary-info">
+                    <h3>32</h3>
+                    <p>Unread</p>
+                </div>
+
+            </div>
+
+        </section>        <!-- ===========================
+                NOTIFICATION TABLE
+        ============================ -->
+
+        <section class="users-container">
+
+            <div class="table-header">
+
+                <h3>Notification List</h3>
+                <span>Showing 5 of 1248 notifications</span>
+
+            </div>
+
+            <table class="users-table">
+
+                <thead>
+
+                    <tr>
+                        <th>Notification</th>
+                        <th>Type</th>
+                        <th>Recipient</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    <tr>
+
+                        <td>New User Registered</td>
+                        <td>User</td>
+                        <td>Rahul Sharma</td>
+                        <td>21 Jul 2026</td>
+
+                        <td>
+                            <span class="status active">
+                                Read
+                            </span>
+                        </td>
+
+                        <td>
+                            <div class="actions">
+
+                                <button class="action-btn delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Password Reset Request</td>
+                        <td>Security</td>
+                        <td>Priya Patil</td>
+                        <td>21 Jul 2026</td>
+
+                        <td>
+                            <span class="status pending">
+                                Unread
+                            </span>
+                        </td>
+
+                        <td>
+                            <div class="actions"></div>
+
+                                <button class="action-btn delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Career Updated</td>
+                        <td>Career</td>
+                        <td>All Users</td>
+                        <td>20 Jul 2026</td>
+
+                        <td>
+                            <span class="status active">
+                                Read
+                            </span>
+                        </td>
+
+                        <td>
+                            <div class="actions">
+
+                                <button class="action-btn delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>AI Recommendation Generated</td>
+                        <td>Recommendation</td>
+                        <td>Sneha Joshi</td>
+                        <td>20 Jul 2026</td>
+
+                        <td>
+                            <span class="status active">
+                                Read
+                            </span>
+                        </td>
+
+                        <td>
+                            <div class="actions">
+
+                                <button class="action-btn delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>New Admin Login</td>
+                        <td>Security</td>
+                        <td>Administrator</td>
+                        <td>19 Jul 2026</td>
+
+                        <td>
+                            <span class="status pending">
+                                Unread
+                            </span>
+                        </td>
+
+                        <td>
+                            <div class="actions">
+
+                                <button class="action-btn delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>    
+    </main>
+
+
+</div>
+
+<script src="{{ url_for('static', filename='adminpanel/notifications.js') }}"></script>
+
+</body>
+
+</html>

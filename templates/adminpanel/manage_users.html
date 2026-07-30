@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Users</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet"
+      href="{{ url_for('static', filename='adminpanel/admin_dashboard.css') }}">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- ===========================
+            SIDEBAR
+    ============================ -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <h2>Decision Twin</h2>
+
+            <p>Admin Panel</p>
+
+        </div>
+
+        <ul>
+<li>
+    <a href="{{ url_for('admin_dashboard') }}">
+        <i class="fas fa-house"></i>
+        <span>Dashboard</span>
+    </a>
+</li>
+<li class="active">
+    <a href="{{ url_for('manage_users') }}">
+        <i class="fas fa-users"></i>
+        <span>Manage Users</span>
+    </a>
+</li>
+<li>
+    <a href="{{ url_for('career_management') }}">
+        <i class="fas fa-graduation-cap"></i>
+        <span>Career Management</span>
+    </a>
+</li>
+
+<li>
+    <a href="{{ url_for('latest_recommendation') }}">
+        <i class="fas fa-brain"></i>
+        <span>Latest Recommendation</span>
+    </a>
+</li>
+
+<li>
+    <a href="{{ url_for('notifications') }}">
+        <i class="fas fa-bell"></i>
+        <span>Notifications</span>
+    </a>
+</li>
+
+           
+            <li>
+                <a href="{{ url_for('settings') }}">
+                    <i class="fas fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="{{ url_for('logout') }}">
+                    <i class="fas fa-right-from-bracket"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+
+        </ul>
+
+    </aside>
+
+    <!-- ===========================
+            MAIN CONTENT
+    ============================ -->
+
+    <main class="main-content">
+
+    <!-- ===========================
+            TOP NAVBAR
+    ============================ -->
+
+    <header class="topbar">
+
+        <div class="dashboard-title">
+
+            <img src="{{ url_for('static', filename='adminpanel/images/logochat.png') }}"
+     alt="Decision Twin Logo">
+
+            <div>
+                <h1>Manage Users</h1>
+            </div>
+
+        </div>
+    </header>
+
+    <!-- ===========================
+            PAGE HEADER
+    ============================ -->
+
+    <!-- ===========================
+        PAGE HEADER
+=========================== -->
+
+<section class="users-header">
+
+    <div class="page-heading">
+
+        <div class="title-row">
+
+            <a href="{{ url_for('admin_dashboard') }}" class="back-btn">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+
+            <h2>Manage Users</h2>
+
+        </div>
+
+        <p>
+            Manage all registered users, monitor their activity,
+            and control account access from one place.
+        </p>
+
+    </div>
+
+</section>
+
+<!-- ===========================
+        SEARCH BAR
+=========================== -->
+
+<section class="user-toolbar">
+
+    <div class="toolbar-search">
+
+        <i class="fas fa-search"></i>
+
+        <input
+    type="text"
+    id="searchUser"
+    placeholder="Search username or email...">
+
+    </div>
+
+    <div class="toolbar-buttons">
+
+        <button class="invite-btn">
+
+            <i class="fas fa-user-plus"></i>
+
+            Invite User
+
+        </button>
+
+        <button class="refresh-btn">
+
+            <i class="fas fa-rotate-right"></i>
+
+            Refresh
+
+        </button>
+
+    </div>
+
+</section>
+
+<!-- ===========================
+        USER SUMMARY
+=========================== -->
+
+<section class="user-summary">
+
+    <div class="summary-card">
+        <div class="summary-icon blue">
+            <i class="fas fa-users"></i>
+        </div>
+
+        <div class="summary-info">
+            <h3>250</h3>
+            <p>Total Users</p>
+        </div>
+    </div>
+
+    <div class="summary-card">
+        <div class="summary-icon green">
+            <i class="fas fa-user-check"></i>
+        </div>
+
+        <div class="summary-info">
+            <h3>210</h3>
+            <p>Active Users</p>
+        </div>
+    </div>
+
+    <div class="summary-card">
+        <div class="summary-icon red">
+            <i class="fas fa-user-slash"></i>
+        </div>
+
+        <div class="summary-info">
+            <h3>12</h3>
+            <p>Suspended</p>
+        </div>
+    </div>
+
+    <div class="summary-card">
+        <div class="summary-icon orange">
+            <i class="fas fa-circle"></i>
+        </div>
+
+        <div class="summary-info">
+            <h3>45</h3>
+            <p>Online Now</p>
+        </div>
+    </div>
+
+</section>
+
+<!-- ===========================
+        USER LIST
+=========================== -->
+
+<!-- ===========================
+        USERS TABLE
+=========================== -->
+
+<section class="users-container">
+
+    <div class="table-header">
+
+        <h3>Registered Users</h3>
+
+        <span>Showing 3 of 250 users</span>
+
+    </div>
+
+    <table class="users-table">
+
+        <thead>
+
+            <tr>
+
+                <th>User</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Last Login</th>
+                <th>Actions</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody id="usersTableBody">
+
+{% for user in users %}
+<tr>
+
+    <td>
+        <div class="user-info">
+            <div class="table-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+
+            {{ user.username }}
+        </div>
+    </td>
+
+    <td>{{ user.email }}</td>
+
+    <td>{{ user.role }}</td>
+
+    <td>
+        <span class="status active">
+            Active
+        </span>
+    </td>
+
+    <td>--</td>
+
+    <td>
+        {% if user.role == "user" %}
+<a href="{{ url_for('promote_user', user_id=user.id) }}">
+    <button class="action-btn edit">
+        Promote
+    </button>
+</a>
+{% else %}
+<button class="action-btn edit" disabled>
+    Admin
+</button>
+{% endif %}
+
+        <button class="action-btn delete">
+            <i class="fas fa-trash"></i>
+        </button>
+    </td>
+
+</tr>
+{% endfor %}
+
+        </tbody>
+
+    </table>
+
+</section>
+<!-- ==========================
+     Invite User Modal
+========================== -->
+<div id="userModal" class="modal" style="display:none;">
+
+    <div class="modal-content">
+
+        <h2>Invite User</h2>
+
+        <input type="text" id="userName" placeholder="Full Name">
+
+        <input type="email" id="userEmail" placeholder="Email Address">
+
+        <select id="userRole">
+            <option value="Student">Student</option>
+            <option value="Admin">Admin</option>
+        </select>
+
+        <select id="userStatus">
+            <option value="Active">Active</option>
+            <option value="Suspended">Suspended</option>
+        </select>
+
+        <button id="saveUser">Invite User</button>
+        <button id="closeUserModal">Cancel</button>
+
+    </div>
+
+</div>
+
+</main>
+
+<script src="{{ url_for('static', filename='adminpanel/manage_users.js') }}"></script>
+
+</body>
+</html>

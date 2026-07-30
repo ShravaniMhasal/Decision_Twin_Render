@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Decision Twin — Simulate. Analyze. Decide better.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+  <!-- Background decoration: soft glow + faint network lines -->
+  <div class="bg-decor" aria-hidden="true">
+    <div class="glow glow-a"></div>
+    <div class="glow glow-b"></div>
+    <svg class="network" viewBox="0 0 1200 800" preserveAspectRatio="none">
+      <g stroke="#3E6E96" stroke-width="1" opacity="0.35">
+        <line x1="80" y1="120" x2="260" y2="60"/>
+        <line x1="260" y1="60" x2="420" y2="140"/>
+        <line x1="420" y1="140" x2="360" y2="300"/>
+        <line x1="360" y1="300" x2="180" y2="260"/>
+        <line x1="900" y1="600" x2="1080" y2="540"/>
+        <line x1="1080" y1="540" x2="1150" y2="680"/>
+        <line x1="900" y1="600" x2="980" y2="740"/>
+      </g>
+      <g fill="#7BBDE8" opacity="0.6">
+        <circle cx="80" cy="120" r="3"/>
+        <circle cx="260" cy="60" r="3"/>
+        <circle cx="420" cy="140" r="3"/>
+        <circle cx="360" cy="300" r="3"/>
+        <circle cx="180" cy="260" r="3"/>
+        <circle cx="900" cy="600" r="3"/>
+        <circle cx="1080" cy="540" r="3"/>
+        <circle cx="1150" cy="680" r="3"/>
+        <circle cx="980" cy="740" r="3"/>
+      </g>
+    </svg>
+  </div>
+
+  <!-- Nav Header -->
+  <header class="nav">
+    <div class="nav-left">
+      <img src="{{ url_for('static', filename='images/dt2.png') }}" alt="Decision Twin logo" class="logo-mark">
+      <span class="logo-text">DECISION <span class="accent">TWIN</span></span>
+    </div>
+
+    <!-- Dynamic Auth / Profile Container pushed to the far right -->
+    <div id="auth-container" style="margin-left: auto;">
+      <a href="{{ url_for('login') }}" id="login-btn" class="btn btn-accent nav-cta">Login</a>
+      <a href="profile/profile.html" id="profile-btn" class="profile-avatar" title="View Profile" style="display: none;">
+        <svg viewBox="0 0 24 24" fill="none" width="22" height="22">
+          <path d="M12 12C14.2091 12 16 10.2091 16 8C16 5.79086 14.2091 4 12 4C9.79086 4 8 5.79086 8 8C8 10.2091 9.79086 12 12 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M20 21C20 18.2386 16.4183 16 12 16C7.58172 16 4 18.2386 4 21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main class="hero">
+    <span class="eyebrow">WELCOME TO DECISION TWIN</span>
+    <h1>
+      Compare careers, colleges,<br>
+      and certifications with<br>
+      <em>trusted data</em> and AI insights.
+    </h1>
+    <p class="hero-intro">
+      Big life decisions deserve more than guesswork. Decision Twin brings
+      salary trends, job-market demand, learning time, and cost side by side —
+      so you can weigh your options with real numbers instead of gut feeling,
+      every assumption shown in plain sight.
+    </p>
+    <div class="hero-actions">
+      <a href="compare/compare.html">
+    <button class="btn btn-accent">Run a comparison <span class="arrow">↗</span></button></a>
+      <a class="btn btn-outline" href="#features">See how it works</a>
+    </div>
+  </main>
+
+  <!-- How it works -->
+  <section class="features" id="features">
+    <div class="features-head">
+      <span class="eyebrow">HOW IT WORKS</span>
+      <h2>Four tools. One clearer decision.</h2>
+      <p>Every part of Decision Twin exists to answer one question: what does the
+        evidence actually say about your options?</p>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-card" id="compare">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M8 3v18M16 3v18M4 8h4M16 8h4M4 16h4M16 16h4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </div>
+        <h3>Compare</h3>
+        <p>Put two or more paths — careers, colleges, courses, certifications —
+          side by side on the same criteria: salary, demand, skills, and time to
+          get there. No more juggling ten open browser tabs.</p>
+      </div>
+
+      <div class="feature-card" id="trends">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 19V5M4 19h16M8 15l4-5 3 3 5-7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Industry Trends</h3>
+        <p>See where hiring is actually growing — job openings, salary
+          movement, emerging skills, and demand by region — updated regularly
+          so your decision is based on today's market, not last year's.</p>
+      </div>
+
+      <div class="feature-card" id="roi">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.6"/><path d="M12 7v5l3 3" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </div>
+        <h3>ROI Calculator</h3>
+        <p>Weigh tuition, certification fees, and living costs against expected
+          salary growth. Get a straightforward break-even timeline, so you know
+          not just what something costs, but when it pays off.</p>
+      </div>
+
+      <div class="feature-card" id="mentor">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M12 3a5 5 0 0 1 5 5c0 2-1.2 3.2-2 4.2-.5.6-1 1.1-1 1.8v1H10v-1c0-.7-.5-1.2-1-1.8-.8-1-2-2.2-2-4.2a5 5 0 0 1 5-5Z" stroke="currentColor" stroke-width="1.6"/><path d="M10 19h4M11 21h2" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        </div>
+        <h3>AI Mentor</h3>
+        <p>Ask in plain language — "should I do a master's or start working?" —
+          and get a clear breakdown of pros, cons, risk, and alternatives, built
+          from the same data as the rest of the platform.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-left">
+      <img src="dt2.png" alt="Decision Twin logo" class="logo-mark small">
+      <span class="logo-text small">DECISION <span class="accent">TWIN</span></span>
+    </div>
+    <p class="tagline">SIMULATE. &nbsp;ANALYZE. &nbsp;DECIDE BETTER.</p>
+  </footer>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

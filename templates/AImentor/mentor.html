@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decision Twin - AI Career Mentor</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='AImentor/mentor.css') }}">
+</head>
+
+<body>
+
+<div class="container" id="container">
+
+    <!-- ================= CHAT AREA ================= -->
+    <div class="chat-section" id="chatSection">
+        <div class="chat-box" id="chatBox"></div>
+    </div>
+
+    <!-- ================= HOME SCREEN ================= -->
+    <div class="home-screen" id="homeScreen">
+
+        <div class="center-area">
+            <!-- Search -->
+            <div class="search-box">
+                <input type="text" id="userInput" placeholder="Ask me anything about your career...">
+                <button id="sendBtn">
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- ================= Bottom Suggestions ================= -->
+        <div class="bottom-panel">
+            <div class="suggestions">
+                <div class="chip" onclick="askQuestion('AI vs Cybersecurity?')">🤖 AI vs Cybersecurity</div>
+                <div class="chip" onclick="askQuestion('Should I do MS?')">🎓 Should I do MS?</div>
+                <div class="chip" onclick="askQuestion('Programming Language')">💻 Programming Language</div>
+                <div class="chip" onclick="askQuestion('Best Career After B.Tech')">🚀 Best Career</div>
+                <div class="chip" onclick="askQuestion('Data Science Roadmap')">📊 Data Science</div>
+                <div class="chip" onclick="askQuestion('Web Development')">🌐 Web Development</div>
+                <div class="chip" onclick="askQuestion('Cloud Computing')">☁️ Cloud Computing</div>
+                <div class="chip" onclick="askQuestion('Internship vs Full-time Job')">💼 Internship vs Job</div>
+                <div class="chip" onclick="askQuestion('How to build a good resume?')">📄 Resume Tips</div>
+                <div class="chip" onclick="askQuestion('Best Certifications')">📜 Certifications</div>
+                <div class="chip" onclick="askQuestion('Highest Paying Jobs')">💰 Highest Paying Jobs</div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script src="{{ url_for('static', filename='AImentor/mentor.js') }}"></script>
+
+</body>
+</html>

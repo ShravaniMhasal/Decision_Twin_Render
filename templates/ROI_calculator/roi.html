@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Decision Twin India | INR ROI Calculator</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-gradient-to-b from-[#BDD8E9] via-[#0A4174] to-[#001D39] text-[#BDD8E9] font-sans antialiased min-h-screen selection:bg-[#7BBDE8] selection:text-[#001D39]">
+
+  <!-- HEADER (No external/internal navigation links) -->
+  <header class="border-b border-[#4E8EA2]/30 bg-[#BDD8E9]/20 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        
+        <!-- BRAND LOGO & TITLE -->
+        <div class="flex items-center gap-3">
+          <img 
+    src="{{ url_for('static', filename='images/dt2.png') }}"
+    alt="Decision Twin Logo"
+    onerror="this.onerror=null; this.src='https://via.placeholder.com/40?text=DT';"
+    class="h-10 w-auto object-contain rounded drop-shadow"
+/>
+          <div class="flex items-center gap-1.5">
+            <span class="font-bold text-lg tracking-wide uppercase text-[#001D39]">
+              Decision<span class="text-[#0A4174] font-normal">Twin</span>
+              <span class="text-xs bg-[#001D39] text-[#7BBDE8] px-1.5 py-0.5 rounded font-mono ml-1">IN</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-mono bg-[#001D39]/80 text-[#7BBDE8] px-3 py-1 border border-[#49769F]/50 rounded-full">
+            Financial ROI Calculator
+          </span>
+        </div>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <section id="page-roi" class="space-y-8">
+      <!-- SECTION HEADER -->
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#4E8EA2]/40 pb-6">
+        <div>
+          <h1 class="text-3xl font-extrabold tracking-tight text-[#001D39]">Financial ROI & Break-even Intelligence (INR)</h1>
+          <p class="text-[#0A4174] text-sm mt-1 font-medium">
+            Calculate tuition/course fees, PG/rent living costs, foregone CTC, and tax-adjusted in-hand returns.
+          </p>
+        </div>
+
+        <!-- SCENARIO SWITCHER BUTTONS -->
+        <div class="flex items-center gap-2 bg-[#001D39]/80 p-1 border border-[#49769F] rounded-lg">
+          <span class="text-xs font-mono text-[#7BBDE8] px-2">Scenario:</span>
+          <button onclick="applyScenario('conservative')" class="px-2.5 py-1 text-xs rounded font-medium bg-[#0A4174] text-white hover:bg-[#49769F] transition-all">Conservative</button>
+          <button onclick="applyScenario('base')" class="px-2.5 py-1 text-xs rounded font-medium bg-[#7BBDE8] text-[#001D39] font-bold">Base Case</button>
+          <button onclick="applyScenario('optimistic')" class="px-2.5 py-1 text-xs rounded font-medium bg-[#0A4174] text-white hover:bg-[#49769F] transition-all">Aggressive</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        
+        <!-- INPUT FORM PANEL -->
+        <div class="lg:col-span-5 bg-[#001D39]/90 border border-[#0A4174] p-6 rounded-lg space-y-5 shadow-xl">
+          <h3 class="font-bold text-lg text-white border-b border-[#0A4174] pb-3 flex items-center gap-2">
+            <i data-lucide="calculator" class="w-5 h-5 text-[#7BBDE8]"></i>
+            Investment Parameters (₹)
+          </h3>
+
+          <div class="space-y-1.5">
+            <label class="text-xs font-medium text-[#BDD8E9] uppercase tracking-wider">
+              Course / Degree / Coaching Fee (₹ in Lakhs)
+            </label>
+            <input
+              id="input-tuition"
+              type="number"
+              step="0.5"
+              value="3.5"
+              oninput="calculateROI()"
+              class="w-full bg-[#0A4174]/50 border border-[#49769F] px-3 py-2 text-sm rounded focus:outline-none focus:border-[#7BBDE8] font-mono text-white"
+            />
+            <p class="text-[10px] text-[#6EA2B3]">e.g., Executive M.Tech, Upskilling Bootcamp, Certification</p>
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="text-xs font-medium text-[#BDD8E9] uppercase tracking-wider">
+              Monthly PG / Rent & Living Costs (₹)
+            </label>
+            <input
+              id="input-living"
+              type="number"
+              step="1000"
+              value="20000"
+              oninput="calculateROI()"
+              class="w-full bg-[#0A4174]/50 border border-[#49769F] px-3 py-2 text-sm rounded focus:outline-none focus:border-[#7BBDE8] font-mono text-white"
+            />
+            <p class="text-[10px] text-[#6EA2B3]">Tier-1 PG (~₹18k-30k/mo) vs Tier-2/3 PG (~₹8k-15k/mo)</p>
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="text-xs font-medium text-[#BDD8E9] uppercase tracking-wider">
+              Program / Upskilling Duration (Months)
+            </label>
+            <input
+              id="input-duration"
+              type="number"
+              value="6"
+              oninput="calculateROI()"
+              class="w-full bg-[#0A4174]/50 border border-[#49769F] px-3 py-2 text-sm rounded focus:outline-none focus:border-[#7BBDE8] font-mono text-white"
+            />
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="text-xs font-medium text-[#BDD8E9] uppercase tracking-wider">
+              Current CTC (₹ in LPA) <span class="text-[#6EA2B3] font-normal">(Opportunity Cost)</span>
+            </label>
+            <input
+              id="input-current-salary"
+              type="number"
+              step="0.5"
+              value="8.0"
+              oninput="calculateROI()"
+              class="w-full bg-[#0A4174]/50 border border-[#49769F] px-3 py-2 text-sm rounded focus:outline-none focus:border-[#7BBDE8] font-mono text-white"
+            />
+          </div>
+
+          <div class="space-y-1.5">
+            <label class="text-xs font-medium text-[#BDD8E9] uppercase tracking-wider">
+              Target Post-Upskilling CTC (₹ in LPA)
+            </label>
+            <input
+              id="input-expected-salary"
+              type="number"
+              step="0.5"
+              value="18.0"
+              oninput="calculateROI()"
+              class="w-full bg-[#0A4174]/50 border border-[#49769F] px-3 py-2 text-sm rounded focus:outline-none focus:border-[#7BBDE8] font-mono text-white"
+            />
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div class="space-y-1.5">
+              <label class="text-xs font-medium text-[#BDD8E9] uppercase tracking-wider">
+                Annual Hike (%)
+              </label>
+              <input
+                id="input-growth-rate"
+                type="number"
+                value="10"
+                oninput="calculateROI()"
+                class="w-full bg-[#0A4174]/50 border border-[#49769F] px-3 py-2 text-sm rounded focus:outline-none focus:border-[#7BBDE8] font-mono text-white"
+              />
+            </div>
+            <div class="space-y-1.5">
+              <label class="text-xs font-medium text-[#BDD8E9] uppercase tracking-wider">
+                Tax Regime
+              </label>
+              <select id="input-tax-regime" onchange="calculateROI()" class="w-full bg-[#0A4174]/50 border border-[#49769F] px-3 py-2 text-sm rounded focus:outline-none focus:border-[#7BBDE8] font-mono text-white">
+                <option value="new">New Tax Regime</option>
+                <option value="old">Old Tax Regime</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- CALCULATED DASHBOARD -->
+        <div class="lg:col-span-7 space-y-6">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div class="bg-[#001D39]/90 border border-[#0A4174] p-5 rounded-lg shadow-lg">
+              <div class="text-xs text-[#7BBDE8] font-mono">TOTAL INVESTMENT</div>
+              <div id="res-total-investment" class="text-xl font-bold mt-1 text-white font-mono">₹8.70 Lakhs</div>
+              <div class="text-[10px] text-[#6EA2B3] mt-1">Course + Rent + Foregone CTC</div>
+            </div>
+
+            <div class="bg-[#001D39]/90 border border-[#0A4174] p-5 rounded-lg shadow-lg">
+              <div class="text-xs text-[#7BBDE8] font-mono">BREAK-EVEN PERIOD</div>
+              <div id="res-breakeven" class="text-xl font-bold mt-1 text-white font-mono">11 Mos (0.9 Yrs)</div>
+              <div class="text-[10px] text-[#6EA2B3] mt-1">Time to recover total outlay</div>
+            </div>
+
+            <div class="bg-[#001D39]/90 border border-[#0A4174] p-5 rounded-lg shadow-lg">
+              <div class="text-xs text-[#7BBDE8] font-mono">5-YEAR NET ROI</div>
+              <div id="res-roi" class="text-xl font-bold mt-1 text-white font-mono">601.7%</div>
+              <div id="res-net-return" class="text-[10px] text-[#6EA2B3] mt-1">Net Gain: ₹52.35 Lakhs</div>
+            </div>
+          </div>
+
+          <div class="bg-[#001D39]/90 border border-[#0A4174] p-6 rounded-lg space-y-4 shadow-xl">
+            <h3 class="font-bold text-lg text-white border-b border-[#0A4174] pb-3">Indian Income & Cost Breakdown</h3>
+            
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-sm border-collapse">
+                <thead>
+                  <tr class="border-b border-[#0A4174] text-[#7BBDE8] text-xs font-mono">
+                    <th class="py-2 font-normal">COST / GAIN CATEGORY</th>
+                    <th class="py-2 font-normal text-right">VALUE</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-[#0A4174] font-mono text-xs">
+                  <tr>
+                    <td class="py-3 text-[#BDD8E9]">Direct Course / Degree Fees</td>
+                    <td id="tbl-tuition" class="py-3 text-right text-white">₹3.50 Lakhs</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-[#BDD8E9]">PG / Rental & Living Expenses</td>
+                    <td id="tbl-living" class="py-3 text-right text-white">₹1.20 Lakhs</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-[#BDD8E9]">Opportunity Cost (Foregone Salary)</td>
+                    <td id="tbl-opportunity" class="py-3 text-right text-white">₹4.00 Lakhs</td>
+                  </tr>
+                  <tr class="bg-[#0A4174]/40">
+                    <td class="py-3 px-2 font-bold text-white">Total Commitment (Gross)</td>
+                    <td id="tbl-gross" class="py-3 px-2 text-right font-bold text-white">₹8.70 Lakhs</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-[#BDD8E9]">Annual Increase in CTC</td>
+                    <td id="tbl-bump" class="py-3 text-right text-white">+₹10.00 LPA</td>
+                  </tr>
+                  <tr>
+                    <td class="py-3 text-[#BDD8E9]">Approx. Est. In-Hand Monthly Hike (Post-Tax)</td>
+                    <td id="tbl-inhand" class="py-3 text-right text-white">~₹62,500 / month</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="mt-4 p-4 bg-[#0A4174]/30 border border-[#4E8EA2]/40 rounded flex items-start gap-3">
+              <i data-lucide="check-circle-2" class="w-5 h-5 text-[#7BBDE8] shrink-0 mt-0.5"></i>
+              <div class="text-xs text-[#BDD8E9] leading-relaxed">
+                <span class="font-bold text-white uppercase tracking-wider block mb-0.5">Decision Intelligence Verdict</span>
+                <span id="verdict-text">
+                  This decision achieves break-even in <strong>0.9 years</strong> (11 months). Generating an estimated 5-year net return of <strong>₹52.35 Lakhs</strong> (601.7%), this transition provides significant career leverage in the Indian IT/Product landscape.
+                </span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    lucide.createIcons();
+
+    function applyScenario(preset) {
+      if (preset === 'conservative') {
+        document.getElementById('input-tuition').value = 4.5;
+        document.getElementById('input-living').value = 25000;
+        document.getElementById('input-current-salary').value = 10.0;
+        document.getElementById('input-expected-salary').value = 15.0;
+        document.getElementById('input-growth-rate').value = 7;
+      } else if (preset === 'base') {
+        document.getElementById('input-tuition').value = 3.5;
+        document.getElementById('input-living').value = 20000;
+        document.getElementById('input-current-salary').value = 8.0;
+        document.getElementById('input-expected-salary').value = 18.0;
+        document.getElementById('input-growth-rate').value = 10;
+      } else if (preset === 'optimistic') {
+        document.getElementById('input-tuition').value = 3.0;
+        document.getElementById('input-living').value = 18000;
+        document.getElementById('input-current-salary').value = 7.5;
+        document.getElementById('input-expected-salary').value = 24.0;
+        document.getElementById('input-growth-rate').value = 15;
+      }
+      calculateROI();
+    }
+
+    function calculateROI() {
+      const tuitionLakhs = Number(document.getElementById('input-tuition').value) || 0;
+      const monthlyLiving = Number(document.getElementById('input-living').value) || 0;
+      const durationMonths = Number(document.getElementById('input-duration').value) || 0;
+      const currentSalaryLPA = Number(document.getElementById('input-current-salary').value) || 0;
+      const expectedSalaryLPA = Number(document.getElementById('input-expected-salary').value) || 0;
+      const growthRate = Number(document.getElementById('input-growth-rate').value) || 0;
+      const taxRegime = document.getElementById('input-tax-regime').value;
+
+      const durationYears = durationMonths / 12;
+      const directTuitionINR = tuitionLakhs * 100000;
+      const totalLivingINR = monthlyLiving * durationMonths;
+      const opportunityCostINR = (currentSalaryLPA * 100000) * durationYears;
+      
+      const totalInvestmentINR = directTuitionINR + totalLivingINR + opportunityCostINR;
+      const totalInvestmentLakhs = (totalInvestmentINR / 100000).toFixed(2);
+
+      const annualSalaryIncreaseLPA = Math.max(0, expectedSalaryLPA - currentSalaryLPA);
+      const annualIncreaseINR = annualSalaryIncreaseLPA * 100000;
+
+      const breakEvenMonths = annualIncreaseINR > 0 ? Math.ceil((totalInvestmentINR / annualIncreaseINR) * 12) : 0;
+      const breakEvenYears = (breakEvenMonths / 12).toFixed(1);
+
+      const taxMultiplier = taxRegime === 'new' ? 0.78 : 0.72;
+      const approxMonthlyInHandHike = Math.round((annualIncreaseINR * taxMultiplier) / 12);
+
+      let cumulativeGainINR = 0;
+      let tempSalaryLPA = expectedSalaryLPA;
+      for (let i = 1; i <= 5; i++) {
+        cumulativeGainINR += ((tempSalaryLPA - currentSalaryLPA) * 100000);
+        tempSalaryLPA += tempSalaryLPA * (growthRate / 100);
+      }
+
+      const netReturnINR = cumulativeGainINR - totalInvestmentINR;
+      const netReturnLakhs = (netReturnINR / 100000).toFixed(2);
+      const roiPercentage = totalInvestmentINR > 0 ? ((netReturnINR / totalInvestmentINR) * 100).toFixed(1) : 0;
+
+      document.getElementById('res-total-investment').innerText = '₹' + totalInvestmentLakhs + ' Lakhs';
+      document.getElementById('res-breakeven').innerText = `${breakEvenMonths} Mos (${breakEvenYears} Yrs)`;
+      document.getElementById('res-roi').innerText = roiPercentage + '%';
+      document.getElementById('res-net-return').innerText = 'Net Gain: ₹' + netReturnLakhs + ' Lakhs';
+
+      document.getElementById('tbl-tuition').innerText = '₹' + tuitionLakhs.toFixed(2) + ' Lakhs';
+      document.getElementById('tbl-living').innerText = '₹' + (totalLivingINR / 100000).toFixed(2) + ' Lakhs';
+      document.getElementById('tbl-opportunity').innerText = '₹' + (opportunityCostINR / 100000).toFixed(2) + ' Lakhs';
+      document.getElementById('tbl-gross').innerText = '₹' + totalInvestmentLakhs + ' Lakhs';
+      document.getElementById('tbl-bump').innerText = '+₹' + annualSalaryIncreaseLPA.toFixed(2) + ' LPA';
+      document.getElementById('tbl-inhand').innerText = '~₹' + approxMonthlyInHandHike.toLocaleString('en-IN') + ' / month (' + (taxRegime === 'new' ? 'New' : 'Old') + ' Tax)';
+
+      document.getElementById('verdict-text').innerHTML = `
+        This decision achieves break-even in <strong>${breakEvenYears} years</strong> (${breakEvenMonths} months). Generating an estimated 5-year net return of <strong>₹${netReturnLakhs} Lakhs</strong> (${roiPercentage}%), this transition provides significant career leverage in the Indian IT/Product landscape.
+      `;
+    }
+
+    calculateROI();
+  </script>
+</body>
+</html>
