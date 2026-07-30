@@ -76,11 +76,13 @@ def signup():
 
     hashed_password = generate_password_hash(password)
 
-    new_user = User(
+    role = "admin" if email == "shravanimnextgen@gmail.com" else "user"
+
+new_user = User(
     username=username,
     email=email,
     password=hashed_password,
-    role="user"
+    role=role
 )
 
     db.session.add(new_user)
@@ -178,7 +180,7 @@ def dashboard():
 
 @app.route("/admin")
 def admin_dashboard():
-    return render_template("dashboard/dashboard.html")
+    return render_template("adminpanel/admin_dashboard.html")
 
 @app.route("/manage_users")
 def manage_users():
