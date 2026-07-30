@@ -47,6 +47,9 @@ def login():
 
         if user and check_password_hash(user.password, password):
 
+            print("Email:", user.email)
+            print("Role:", user.role)
+
             session["user_id"] = user.id
             session["username"] = user.username
             session["role"] = user.role
@@ -78,12 +81,12 @@ def signup():
 
     role = "admin" if email == "shravanimnextgen@gmail.com" else "user"
 
-new_user = User(
-    username=username,
-    email=email,
-    password=hashed_password,
-    role=role
-)
+    new_user = User(
+        username=username,
+        email=email,
+        password=hashed_password,
+        role=role
+    )
 
     db.session.add(new_user)
     db.session.commit()
