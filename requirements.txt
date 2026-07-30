@@ -1,5 +1,6 @@
 Flask
 Flask-SQLAlchemy
+Flask-Mail
 Werkzeug
 itsdangerous
 gunicorn
