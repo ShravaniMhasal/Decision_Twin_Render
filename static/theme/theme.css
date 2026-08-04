@@ -1,0 +1,655 @@
+/* ==========================================================
+   DECISION TWIN — Global Theme System
+   theme.css
+   Loaded on EVERY page, AFTER the page's own stylesheet.
+   Uses [data-theme] on <html> to switch palettes.
+   ========================================================== */
+
+/* ---------- FOUC prevention ---------- */
+html:not([data-theme]) { visibility: hidden; }
+html[data-theme] { visibility: visible; }
+
+/* ==========================================================
+   1. CSS CUSTOM PROPERTIES — LIGHT (default)
+   ========================================================== */
+:root,
+[data-theme="light"] {
+  /* Core surfaces */
+  --t-page-bg: #F4F8FB;
+  --t-card-bg: #FFFFFF;
+  --t-card-bg-alt: #F0F5FA;
+  --t-sidebar-bg: #001D39;
+  --t-sidebar-text: #BDD8E9;
+  --t-sidebar-active: #0A4174;
+
+  /* Text */
+  --t-text: #001D39;
+  --t-text-secondary: #49769F;
+  --t-text-muted: #6EA2B3;
+  --t-text-on-dark: #F4F8FB;
+
+  /* Accent */
+  --t-accent: #0A4174;
+  --t-accent-bright: #7BBDE8;
+  --t-accent-hover: #001D39;
+
+  /* Borders & dividers */
+  --t-border: rgba(10, 65, 116, 0.12);
+  --t-border-strong: rgba(10, 65, 116, 0.22);
+
+  /* Shadows */
+  --t-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06);
+  --t-shadow-md: 0 4px 14px rgba(0, 0, 0, 0.08);
+  --t-shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.10);
+  --t-shadow-card: 0 4px 20px rgba(10, 65, 116, 0.08);
+
+  /* Glass */
+  --t-glass-bg: rgba(255, 255, 255, 0.75);
+  --t-glass-border: rgba(10, 65, 116, 0.10);
+
+  /* Inputs */
+  --t-input-bg: #FFFFFF;
+  --t-input-border: rgba(10, 65, 116, 0.18);
+  --t-input-text: #001D39;
+  --t-input-placeholder: #6EA2B3;
+
+  /* Chart.js tokens */
+  --t-chart-grid: #e3edf5;
+  --t-chart-tick: #49769F;
+  --t-chart-legend: #001D39;
+  --t-chart-border: #FFFFFF;
+
+  /* Scrollbar */
+  --t-scroll-track: #F0F5FA;
+  --t-scroll-thumb: #BDD8E9;
+  --t-scroll-thumb-hover: #7BBDE8;
+
+  /* Status */
+  --t-success: #10b981;
+  --t-danger: #ef4444;
+  --t-warning: #f59e0b;
+}
+
+/* ==========================================================
+   2. CSS CUSTOM PROPERTIES — DARK
+   ========================================================== */
+[data-theme="dark"] {
+  /* Core surfaces */
+  --t-page-bg: #001428;
+  --t-card-bg: #001D39;
+  --t-card-bg-alt: #012B52;
+  --t-sidebar-bg: #000D1A;
+  --t-sidebar-text: #BDD8E9;
+  --t-sidebar-active: #0A4174;
+
+  /* Text */
+  --t-text: #F4F8FB;
+  --t-text-secondary: #BDD8E9;
+  --t-text-muted: #6EA2B3;
+  --t-text-on-dark: #F4F8FB;
+
+  /* Accent */
+  --t-accent: #7BBDE8;
+  --t-accent-bright: #7BBDE8;
+  --t-accent-hover: #BDD8E9;
+
+  /* Borders & dividers */
+  --t-border: rgba(123, 189, 232, 0.15);
+  --t-border-strong: rgba(123, 189, 232, 0.25);
+
+  /* Shadows */
+  --t-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.25);
+  --t-shadow-md: 0 4px 14px rgba(0, 0, 0, 0.35);
+  --t-shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.45);
+  --t-shadow-card: 0 4px 20px rgba(0, 0, 0, 0.30);
+
+  /* Glass */
+  --t-glass-bg: rgba(0, 29, 57, 0.65);
+  --t-glass-border: rgba(123, 189, 232, 0.15);
+
+  /* Inputs */
+  --t-input-bg: rgba(0, 20, 40, 0.6);
+  --t-input-border: rgba(123, 189, 232, 0.2);
+  --t-input-text: #F4F8FB;
+  --t-input-placeholder: #6EA2B3;
+
+  /* Chart.js tokens */
+  --t-chart-grid: rgba(123, 189, 232, 0.12);
+  --t-chart-tick: #6EA2B3;
+  --t-chart-legend: #BDD8E9;
+  --t-chart-border: #001D39;
+
+  /* Scrollbar */
+  --t-scroll-track: #001428;
+  --t-scroll-thumb: #4E8EA2;
+  --t-scroll-thumb-hover: #7BBDE8;
+}
+
+/* ==========================================================
+   3. GLOBAL TRANSITIONS — smooth theme switching
+   ========================================================== */
+html[data-theme] body,
+html[data-theme] .sidebar,
+html[data-theme] .profile-sidebar,
+html[data-theme] .nav,
+html[data-theme] .stat-card,
+html[data-theme] .panel,
+html[data-theme] .feature-card,
+html[data-theme] .auth-card,
+html[data-theme] .search-card,
+html[data-theme] .results-card,
+html[data-theme] .container,
+html[data-theme] .main,
+html[data-theme] .stat-box,
+html[data-theme] .welcome,
+html[data-theme] input,
+html[data-theme] select,
+html[data-theme] textarea,
+html[data-theme] button,
+html[data-theme] .chip,
+html[data-theme] .tab,
+html[data-theme] .profile-container,
+html[data-theme] .profile-main,
+html[data-theme] .data-card,
+html[data-theme] .settings-inner-card,
+html[data-theme] .profile-inner-card {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* ==========================================================
+   4. TOGGLE BUTTON
+   ========================================================== */
+.theme-toggle-btn {
+  position: fixed;
+  top: 18px;
+  right: 24px;
+  z-index: 99999;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--t-border-strong);
+  background: var(--t-card-bg);
+  color: var(--t-accent-bright);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--t-shadow-md);
+  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+}
+
+/* When placed inside navbar next to login button */
+#auth-container,
+.nav-links {
+  display: flex !important;
+  align-items: center !important;
+  gap: 14px !important;
+}
+
+#auth-container .theme-toggle-btn,
+.nav-links .theme-toggle-btn {
+  position: static !important;
+  top: auto !important;
+  right: auto !important;
+  bottom: auto !important;
+  left: auto !important;
+  margin: 0 !important;
+  flex-shrink: 0 !important;
+}
+
+.theme-toggle-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 25px rgba(123, 189, 232, 0.30);
+}
+
+.theme-toggle-btn:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle-btn:focus-visible {
+  outline: 2px solid var(--t-accent-bright);
+  outline-offset: 3px;
+}
+
+.theme-toggle-btn .theme-icon {
+  font-size: 22px;
+  line-height: 1;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  display: block;
+}
+
+/* Rotate animation on toggle */
+.theme-toggle-btn.animate .theme-icon {
+  animation: themeIconSpin 0.3s ease;
+}
+
+@keyframes themeIconSpin {
+  0% { transform: rotate(0deg) scale(0.7); opacity: 0.3; }
+  100% { transform: rotate(360deg) scale(1); opacity: 1; }
+}
+
+/* ==========================================================
+   5. SCROLLBAR THEMING
+   ========================================================== */
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--t-scroll-track); }
+::-webkit-scrollbar-thumb { background: var(--t-scroll-thumb); border-radius: 20px; }
+::-webkit-scrollbar-thumb:hover { background: var(--t-scroll-thumb-hover); }
+
+/* ==========================================================
+   6. PAGE-SPECIFIC LIGHT-THEME OVERRIDES
+   ========================================================== */
+
+/* ---- 6a. Landing Page (style.css pages: index, login, reset_password) ---- */
+[data-theme="light"] body {
+  background: var(--t-page-bg) !important;
+  color: var(--t-text) !important;
+}
+
+/* Landing nav */
+[data-theme="light"] .nav {
+  background: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(12px) !important;
+  border-bottom-color: var(--t-border) !important;
+}
+
+[data-theme="light"] .logo-text { color: var(--t-text) !important; }
+[data-theme="light"] .nav-links { color: var(--t-text-secondary) !important; }
+[data-theme="light"] .nav-links a:hover { color: var(--t-text) !important; }
+
+/* Hero */
+[data-theme="light"] .hero h1 { color: var(--t-text) !important; }
+[data-theme="light"] .hero-intro { color: var(--t-text-secondary) !important; }
+[data-theme="light"] .eyebrow { color: var(--t-accent) !important; }
+[data-theme="light"] .btn-outline { color: var(--t-text) !important; border-color: var(--t-text-secondary) !important; }
+[data-theme="light"] .btn-outline:hover { color: var(--t-accent-bright) !important; border-color: var(--t-accent-bright) !important; }
+
+/* Feature cards */
+[data-theme="light"] .feature-card {
+  background: var(--t-card-bg) !important;
+  border-color: var(--t-border) !important;
+  box-shadow: var(--t-shadow-card) !important;
+}
+[data-theme="light"] .feature-card:hover {
+  border-color: var(--t-accent-bright) !important;
+  box-shadow: var(--t-shadow-lg) !important;
+  background: var(--t-card-bg) !important;
+}
+[data-theme="light"] .feature-card h3 { color: var(--t-text) !important; }
+[data-theme="light"] .feature-card p { color: var(--t-text-secondary) !important; }
+[data-theme="light"] .features-head h2 { color: var(--t-text) !important; }
+[data-theme="light"] .features-head p { color: var(--t-text-secondary) !important; }
+
+/* Footer */
+[data-theme="light"] .footer { border-top-color: var(--t-border) !important; }
+[data-theme="light"] .tagline { color: var(--t-text-secondary) !important; }
+
+/* Background decoration toned down in light mode */
+[data-theme="light"] .bg-decor { opacity: 0.15 !important; }
+[data-theme="light"] .glow { opacity: 0.1 !important; }
+
+/* Auth card (login, reset password) */
+[data-theme="light"] .auth-card {
+  background: rgba(255, 255, 255, 0.85) !important;
+  border-color: var(--t-border) !important;
+  box-shadow: var(--t-shadow-lg) !important;
+}
+[data-theme="light"] .auth-header h2 { color: var(--t-text) !important; }
+[data-theme="light"] .auth-header p { color: var(--t-text-secondary) !important; }
+[data-theme="light"] .form-group label { color: var(--t-text-secondary) !important; }
+[data-theme="light"] .form-group input,
+[data-theme="light"] .form-group select {
+  background: var(--t-input-bg) !important;
+  border-color: var(--t-input-border) !important;
+  color: var(--t-input-text) !important;
+}
+[data-theme="light"] .form-group input::placeholder { color: var(--t-input-placeholder) !important; }
+[data-theme="light"] .form-group input:focus,
+[data-theme="light"] .form-group select:focus {
+  border-color: var(--t-accent-bright) !important;
+  box-shadow: 0 0 10px rgba(10, 65, 116, 0.15) !important;
+}
+[data-theme="light"] .auth-switch { color: var(--t-text-secondary) !important; }
+[data-theme="light"] .auth-switch a { color: var(--t-accent) !important; }
+[data-theme="light"] .forgot-link { color: var(--t-accent) !important; }
+[data-theme="light"] .back-home { color: var(--t-text-secondary) !important; }
+[data-theme="light"] .back-home:hover { color: var(--t-accent) !important; }
+
+/* Drawer */
+[data-theme="light"] .dashboard-toggle-btn {
+  background: var(--t-card-bg) !important;
+  color: var(--t-accent) !important;
+  border-color: var(--t-border) !important;
+  box-shadow: var(--t-shadow-md) !important;
+}
+[data-theme="light"] .dashboard-drawer {
+  background: var(--t-card-bg) !important;
+  border-right-color: var(--t-border) !important;
+}
+[data-theme="light"] .drawer-header h3 { color: var(--t-text) !important; }
+[data-theme="light"] .drawer-close-btn { color: var(--t-text-secondary) !important; }
+[data-theme="light"] .drawer-stats {
+  background: var(--t-card-bg-alt) !important;
+  border-color: var(--t-border) !important;
+}
+[data-theme="light"] .drawer-stat-row { color: var(--t-text-secondary) !important; }
+[data-theme="light"] .drawer-stat-row strong { color: var(--t-accent) !important; }
+[data-theme="light"] .drawer-menu-label { color: var(--t-text-secondary) !important; }
+[data-theme="light"] .drawer-list a {
+  color: var(--t-text-secondary) !important;
+  background: transparent !important;
+}
+[data-theme="light"] .drawer-list a:hover {
+  background: var(--t-card-bg-alt) !important;
+  color: var(--t-text) !important;
+}
+
+/* Profile avatar on nav */
+[data-theme="light"] .profile-avatar {
+  background: linear-gradient(135deg, var(--t-accent-bright), var(--t-accent)) !important;
+}
+
+/* ---- 6b. Dashboard (dashboard.css pages: dashboard, saved-reports, quick-compare) ---- */
+[data-theme="light"] .app { background: var(--t-page-bg) !important; }
+[data-theme="light"] .main { background: var(--t-page-bg) !important; }
+[data-theme="light"] .page-title { color: var(--t-text) !important; }
+[data-theme="light"] .stat-card {
+  background: var(--t-card-bg) !important;
+  border-color: var(--t-border) !important;
+  box-shadow: var(--t-shadow-card) !important;
+}
+[data-theme="light"] .stat-label { color: var(--t-text-secondary) !important; }
+[data-theme="light"] .stat-value { color: var(--t-text) !important; }
+[data-theme="light"] .panel {
+  background: var(--t-card-bg) !important;
+  border-color: var(--t-border) !important;
+  box-shadow: var(--t-shadow-card) !important;
+}
+[data-theme="light"] .panel-head h3 { color: var(--t-text) !important; }
+[data-theme="light"] .step-title { color: var(--t-text) !important; }
+[data-theme="light"] .step-sub { color: var(--t-text-secondary) !important; }
+[data-theme="light"] .step-dot { border-color: var(--t-card-bg) !important; }
+[data-theme="light"] .search-bar {
+  background: var(--t-card-bg) !important;
+  border-color: var(--t-border) !important;
+  color: var(--t-text-secondary) !important;
+}
+[data-theme="light"] .trend-row { color: var(--t-text) !important; border-bottom-color: var(--t-border) !important; }
+[data-theme="light"] .dropdown {
+  background: var(--t-card-bg) !important;
+  border-color: var(--t-border) !important;
+  color: var(--t-text-secondary) !important;
+}
+
+/* ---- 6c. Compare page ---- */
+[data-theme="light"] .compare-container .hero {
+  background: rgba(10, 65, 116, 0.06) !important;
+  backdrop-filter: blur(18px) !important;
+  border-color: var(--t-border) !important;
+}
+[data-theme="light"] .compare-container .hero h1 { color: var(--t-text) !important; }
+[data-theme="light"] .compare-container .hero h1 span { color: var(--t-accent-bright) !important; }
+[data-theme="light"] .compare-container .hero p { color: var(--t-text-secondary) !important; }
+[data-theme="light"] .tab {
+  background: var(--t-card-bg) !important;
+  color: var(--t-text-secondary) !important;
+  border-color: var(--t-border) !important;
+}
+[data-theme="light"] .active-tab {
+  background: linear-gradient(90deg, #4E8EA2, #7BBDE8) !important;
+  color: white !important;
+}
+[data-theme="light"] .search-card {
+  background: var(--t-card-bg) !important;
+  backdrop-filter: none !important;
+  border-color: var(--t-border) !important;
+  box-shadow: var(--t-shadow-card) !important;
+}
+[data-theme="light"] .search-card h2 { color: var(--t-text) !important; }
+[data-theme="light"] .search-card p { color: var(--t-text-secondary) !important; }
+[data-theme="light"] .search-box label { color: var(--t-text) !important; }
+[data-theme="light"] .search-box input {
+  background: var(--t-card-bg-alt) !important;
+  color: var(--t-input-text) !important;
+  border-color: var(--t-input-border) !important;
+}
+[data-theme="light"] .search-box input::placeholder { color: var(--t-input-placeholder) !important; }
+[data-theme="light"] .vs-circle {
+  background: var(--t-accent) !important;
+  border-color: var(--t-accent-bright) !important;
+}
+[data-theme="light"] .results-section h2 { color: var(--t-text) !important; text-shadow: none !important; }
+[data-theme="light"] .results-section p { color: var(--t-text-secondary) !important; }
+[data-theme="light"] .results-card {
+  background: var(--t-card-bg) !important;
+  border-color: var(--t-border) !important;
+  box-shadow: var(--t-shadow-card) !important;
+}
+[data-theme="light"] .results-card th {
+  background: var(--t-accent) !important;
+  color: #fff !important;
+}
+[data-theme="light"] .results-card td {
+  color: var(--t-text) !important;
+  border-bottom-color: var(--t-border) !important;
+}
+[data-theme="light"] .results-card td:first-child { color: var(--t-accent) !important; }
+[data-theme="light"] .results-card tr:hover { background: var(--t-card-bg-alt) !important; }
+[data-theme="light"] .feedback-section p { color: var(--t-text-secondary) !important; }
+[data-theme="light"] .feedback-btn {
+  background: var(--t-card-bg-alt) !important;
+  border-color: var(--t-border) !important;
+  color: var(--t-text) !important;
+}
+[data-theme="light"] .feedback-btn:hover {
+  background: var(--t-accent) !important;
+  color: #fff !important;
+}
+[data-theme="light"] .recommendation-card {
+  background: linear-gradient(135deg, #0A4174, #49769F) !important;
+}
+/* Compare page background dot pattern */
+[data-theme="light"] body::before {
+  background: radial-gradient(circle, rgba(10,65,116,0.08) 2px, transparent 2px),
+              radial-gradient(circle, rgba(78,142,162,0.06) 3px, transparent 3px) !important;
+}
+
+/* ---- 6d. AI Mentor ---- */
+[data-theme="light"] .chat-box { background: var(--t-card-bg-alt) !important; }
+[data-theme="light"] .chat-box::-webkit-scrollbar-thumb { background: var(--t-scroll-thumb) !important; }
+[data-theme="light"] .ai-bubble {
+  background: var(--t-card-bg) !important;
+  color: var(--t-text) !important;
+  border-color: var(--t-border) !important;
+}
+[data-theme="light"] .user-bubble {
+  background: linear-gradient(135deg, #0A4174, #001D39) !important;
+  color: white !important;
+}
+[data-theme="light"] .ai-avatar { background: var(--t-card-bg) !important; border-color: var(--t-border) !important; }
+[data-theme="light"] .user-avatar { background: var(--t-accent) !important; }
+
+/* Mentor container */
+[data-theme="light"] .container:not(.profile-container) {
+  background: var(--t-card-bg) !important;
+  border-color: var(--t-border) !important;
+  box-shadow: var(--t-shadow-lg) !important;
+}
+[data-theme="light"] .app-header {
+  background: var(--t-card-bg) !important;
+  border-bottom-color: var(--t-border) !important;
+}
+[data-theme="light"] .brand-name { color: var(--t-text) !important; }
+[data-theme="light"] .chip {
+  background: var(--t-card-bg-alt) !important;
+  color: var(--t-text) !important;
+  border-color: var(--t-border) !important;
+}
+[data-theme="light"] .chip:hover {
+  background: var(--t-accent) !important;
+  color: #fff !important;
+}
+/* Mentor search input light */
+[data-theme="light"] .search-box input {
+  background: var(--t-card-bg-alt) !important;
+  color: var(--t-input-text) !important;
+  box-shadow: var(--t-shadow-sm) !important;
+}
+[data-theme="light"] .search-box input::placeholder { color: var(--t-input-placeholder) !important; }
+[data-theme="light"] .search-box button {
+  background: linear-gradient(135deg, var(--t-accent), var(--t-accent-bright)) !important;
+}
+
+/* ---- 6e. Admin Panel ---- */
+[data-theme="light"] .main-content { background: var(--t-page-bg) !important; }
+[data-theme="light"] .topbar h1 { color: var(--t-text) !important; }
+[data-theme="light"] .welcome h2 { color: var(--t-text) !important; }
+[data-theme="light"] .welcome p { color: var(--t-text-secondary) !important; }
+[data-theme="light"] .stats-header h2 { color: var(--t-text) !important; }
+[data-theme="light"] .stats-header p { color: var(--t-text-secondary) !important; }
+[data-theme="light"] .stat-box {
+  background: var(--t-card-bg) !important;
+  border-color: var(--t-border) !important;
+  box-shadow: var(--t-shadow-card) !important;
+}
+[data-theme="light"] .stat-box:hover {
+  box-shadow: var(--t-shadow-lg) !important;
+  border-color: var(--t-accent-bright) !important;
+}
+[data-theme="light"] .stat-box::before { background: rgba(10, 65, 116, 0.06) !important; }
+[data-theme="light"] .stat-content h4 { color: var(--t-text) !important; }
+[data-theme="light"] .stat-content h2 { color: var(--t-text) !important; }
+[data-theme="light"] .stat-content p,
+[data-theme="light"] .stat-content small { color: var(--t-text-secondary) !important; }
+[data-theme="light"] .stat-icon {
+  background: var(--t-accent-bright) !important;
+  color: var(--t-text) !important;
+}
+[data-theme="light"] .admin-profile h4 { color: var(--t-text) !important; }
+[data-theme="light"] .admin-profile p { color: var(--t-text-secondary) !important; }
+
+/* Admin search */
+[data-theme="light"] .topbar .search-box input {
+  background: var(--t-card-bg) !important;
+  color: var(--t-input-text) !important;
+  border: 1px solid var(--t-border) !important;
+}
+[data-theme="light"] .topbar .search-box i { color: var(--t-text-secondary) !important; }
+
+/* Admin tables (manage users, etc.) */
+[data-theme="light"] .users-container {
+  background: var(--t-card-bg) !important;
+  box-shadow: var(--t-shadow-card) !important;
+}
+[data-theme="light"] .table-header h3 { color: var(--t-text) !important; }
+[data-theme="light"] .table-header span { color: var(--t-text-secondary) !important; }
+[data-theme="light"] .users-table td { color: var(--t-text) !important; border-bottom-color: var(--t-border) !important; }
+[data-theme="light"] .users-table tbody tr:hover { background: var(--t-card-bg-alt) !important; }
+
+/* Admin settings card */
+[data-theme="light"] .setting-card {
+  background: var(--t-card-bg) !important;
+  color: var(--t-text) !important;
+  box-shadow: var(--t-shadow-card) !important;
+}
+
+/* Admin page heading */
+[data-theme="light"] .page-heading h2 { color: var(--t-text) !important; }
+[data-theme="light"] .page-heading p { color: var(--t-text-secondary) !important; }
+
+/* Admin toolbar */
+[data-theme="light"] .toolbar-search input {
+  background: var(--t-card-bg) !important;
+  color: var(--t-input-text) !important;
+  border: 1px solid var(--t-border) !important;
+  box-shadow: var(--t-shadow-sm) !important;
+}
+[data-theme="light"] .toolbar-search input::placeholder { color: var(--t-input-placeholder) !important; }
+
+/* Modal */
+[data-theme="light"] .modal-content {
+  background: var(--t-card-bg) !important;
+  color: var(--t-text) !important;
+}
+
+/* ---- 6f. Profile page (pfstyle.css already has body.dark-theme support) ---- */
+[data-theme="light"] .profile-container {
+  background: var(--t-card-bg) !important;
+  box-shadow: var(--t-shadow-lg) !important;
+}
+[data-theme="light"] .profile-main { background: var(--t-card-bg) !important; }
+[data-theme="light"] .main-header { border-bottom-color: var(--t-border) !important; }
+[data-theme="light"] .main-header h1 { color: var(--t-text) !important; }
+[data-theme="light"] .subtitle { color: var(--t-text-secondary) !important; }
+[data-theme="light"] .data-card {
+  background: var(--t-card-bg-alt) !important;
+  border-color: var(--t-border) !important;
+}
+[data-theme="light"] .notif-item {
+  background: var(--t-card-bg-alt) !important;
+  border-color: var(--t-border) !important;
+}
+
+/* ---- 6g. Roadmap page (inline styles) ---- */
+[data-theme="light"] .roadmap-wrapper,
+[data-theme="light"] .roadmap-container {
+  background: var(--t-card-bg) !important;
+  border-color: var(--t-border) !important;
+}
+
+/* ---- 6h. Resume Analyser (inline styles) ---- */
+[data-theme="light"] .resume-wrapper,
+[data-theme="light"] .resume-container {
+  background: var(--t-card-bg) !important;
+  border-color: var(--t-border) !important;
+}
+
+/* ---- 6i. ROI Calculator (Tailwind) ---- */
+/* Tailwind-based pages need higher-specificity overrides */
+[data-theme="light"] .bg-gradient-to-b {
+  background: var(--t-page-bg) !important;
+}
+
+/* ---- 6j. Saved Reports ---- */
+[data-theme="light"] .report-card {
+  background: var(--t-card-bg) !important;
+  border-color: var(--t-border) !important;
+  box-shadow: var(--t-shadow-card) !important;
+}
+
+/* ==========================================================
+   7. SELECTION HIGHLIGHT
+   ========================================================== */
+[data-theme="light"] ::selection {
+  background: #7BBDE8;
+  color: #001D39;
+}
+[data-theme="dark"] ::selection {
+  background: #7BBDE8;
+  color: #001D39;
+}
+
+/* ==========================================================
+   8. FOCUS STATES (Accessibility)
+   ========================================================== */
+*:focus-visible {
+  outline: 2px solid var(--t-accent-bright);
+  outline-offset: 2px;
+}
+
+/* ==========================================================
+   9. RESPONSIVE TOGGLE PLACEMENT
+   ========================================================== */
+@media (max-width: 768px) {
+  .theme-toggle-btn {
+    bottom: 16px;
+    right: 16px;
+    width: 42px;
+    height: 42px;
+  }
+  .theme-toggle-btn .theme-icon {
+    font-size: 18px;
+  }
+}

@@ -44,6 +44,8 @@
   .metric-label{ font-size:13px; color:var(--c3); }
   .metric-val{ font-size:14px; font-weight:600; color:var(--c2); }
 </style>
+<link rel="stylesheet" href="{{ url_for('static', filename='theme/theme.css') }}">
+<script>!function(){var t;try{t=localStorage.getItem('theme')}catch(e){}if(!t){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme:light)').matches?'light':'dark'}document.documentElement.dataset.theme=t}();</script>
 </head>
 <body>
 
@@ -168,5 +170,6 @@ function saveComparisonLocally() {
 }
 </script>
 
+<script src="{{ url_for('static', filename='theme/theme.js') }}"></script>
 </body>
 </html>
