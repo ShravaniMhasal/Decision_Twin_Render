@@ -18,6 +18,8 @@
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
+<link rel="stylesheet" href="{{ url_for('static', filename='theme/theme.css') }}">
+<script>!function(){var t;try{t=localStorage.getItem('theme')}catch(e){}if(!t){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme:light)').matches?'light':'dark'}document.documentElement.dataset.theme=t}();</script>
 </head>
 
 <body>
@@ -306,5 +308,6 @@
 </div>
 <script src="career_management.js"></script>
 <!-- View Career Modal -->
+<script src="{{ url_for('static', filename='theme/theme.js') }}"></script>
 </body>
 </html>

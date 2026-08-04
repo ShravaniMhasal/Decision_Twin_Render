@@ -8,6 +8,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Lucide Icons CDN -->
   <script src="https://unpkg.com/lucide@latest"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='theme/theme.css') }}">
+<script>!function(){var t;try{t=localStorage.getItem('theme')}catch(e){}if(!t){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme:light)').matches?'light':'dark'}document.documentElement.dataset.theme=t}();</script>
 </head>
 <body class="bg-gradient-to-b from-[#BDD8E9] via-[#0A4174] to-[#001D39] text-[#BDD8E9] font-sans antialiased min-h-screen selection:bg-[#7BBDE8] selection:text-[#001D39]">
 
@@ -328,5 +330,6 @@
 
     calculateROI();
   </script>
+<script src="{{ url_for('static', filename='theme/theme.js') }}"></script>
 </body>
 </html>

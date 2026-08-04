@@ -13,6 +13,8 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='AImentor/mentor.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='theme/theme.css') }}">
+<script>!function(){var t;try{t=localStorage.getItem('theme')}catch(e){}if(!t){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme:light)').matches?'light':'dark'}document.documentElement.dataset.theme=t}();</script>
 </head>
 
 <body>
@@ -60,5 +62,6 @@
 
 <script src="{{ url_for('static', filename='AImentor/mentor.js') }}"></script>
 
+<script src="{{ url_for('static', filename='theme/theme.js') }}"></script>
 </body>
 </html>

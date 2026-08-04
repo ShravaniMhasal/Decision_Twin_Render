@@ -36,6 +36,8 @@
   .report-meta{ font-size:11px; color:var(--c5); display:flex; justify-content:space-between; align-items:center; }
   .btn-view{ background:var(--c7); color:var(--c2); border:none; padding:6px 12px; border-radius:6px; font-weight:600; cursor:pointer; font-size:12px; }
 </style>
+<link rel="stylesheet" href="{{ url_for('static', filename='theme/theme.css') }}">
+<script>!function(){var t;try{t=localStorage.getItem('theme')}catch(e){}if(!t){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme:light)').matches?'light':'dark'}document.documentElement.dataset.theme=t}();</script>
 </head>
 <body>
 
@@ -133,5 +135,6 @@ function viewReportInsights(title, description) {
 document.addEventListener('DOMContentLoaded', fetchSavedReportsLocally);
 </script>
 
+<script src="{{ url_for('static', filename='theme/theme.js') }}"></script>
 </body>
 </html>

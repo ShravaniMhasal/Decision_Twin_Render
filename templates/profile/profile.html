@@ -6,6 +6,8 @@
     <title>Twin Decision System | System Registration Portal</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='profile/pfstyle.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link rel="stylesheet" href="{{ url_for('static', filename='theme/theme.css') }}">
+<script>!function(){var t;try{t=localStorage.getItem('theme')}catch(e){}if(!t){t=window.matchMedia&&window.matchMedia('(prefers-color-scheme:light)').matches?'light':'dark'}document.documentElement.dataset.theme=t}();</script>
 </head>
 <body class="light-theme">
 
@@ -324,5 +326,6 @@
     </div>
 
     <script src="{{ url_for('static', filename='profile/pfscript.js') }}"></script>
+<script src="{{ url_for('static', filename='theme/theme.js') }}"></script>
 </body>
 </html>
