@@ -149,8 +149,22 @@
 
     btn.addEventListener('click', toggleTheme);
 
-    // Keyboard support (Enter and Space already handled by <button>)
-    document.body.appendChild(btn);
+    // If page has an auth container or nav-links (e.g. landing page navbar), place on the left side of login button
+    var targetParent = document.querySelector('#auth-container') ||
+                       document.querySelector('.nav-links');
+    var targetBefore = document.querySelector('#login-btn') ||
+                       document.querySelector('.nav-login') ||
+                       (targetParent ? targetParent.firstChild : null);
+
+    if (targetParent) {
+      if (targetBefore && targetBefore.parentNode === targetParent) {
+        targetParent.insertBefore(btn, targetBefore);
+      } else {
+        targetParent.insertBefore(btn, targetParent.firstChild);
+      }
+    } else {
+      document.body.appendChild(btn);
+    }
   }
 
   // ---- Initialize on DOMContentLoaded ----
